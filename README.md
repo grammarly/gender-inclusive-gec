@@ -10,7 +10,61 @@ Evaluation datasets presented in [Gender-Inclusive Grammatical Error Correction 
 * `bea_dev_556_orig(.m2|.src.txt|.tgt.txt)` - Original parallel subset of the BEA 2019 shared-task dev dataset with minor edits to ensure consistency and parallelism with masculine/feminine pronoun dataset.
 
 ## Scripts
-The code for generating augmented data will be added soon.
+
+All code that is required for generating `singular they` augmentation is located in `scripts` directory.
+
+### Installation
+
+The default way of installation is:
+
+0. Make sure you have python 3.7+
+1. Clone the repository.
+2. `cd gender-inclusive-gec`
+3. `pip install -r requirements.txt`
+4. Install `neuralcoref==4.0.0` from the source as described here: https://github.com/huggingface/neuralcoref#install-neuralcoref-from-source
+5. Download spacy model: `python -m spacy download en_core_web_lg`
+
+### Demo
+
+After the installation is done, to test how the code works, please try running `python scripts/demo.py`.  
+Examples from demo.
+
+```
+Singular `they` augmentation:
+1:      Original: She is a linguist .
+        Augmented: They are a linguist .
+2:      Original: She 's a linguist .
+        Augmented: They 're a linguist .
+3:      Original: When Gregor Samsa woke one morning from troubled dreams , he found himself transformed right there in his bed into some sort of monstrous insect .
+        Augmented: When Gregor Samsa woke one morning from troubled dreams , they found themself transformed right there in their bed into some sort of monstrous insect .
+4:      Original: The clock was striking as she stepped out into the street .
+        Augmented: None
+5:      Original: The universe ( which others call the Library ) is composed of an indefinite , perhaps infinite number of hexagonal galleries .
+        Augmented: None
+Singular `they` augmentation for GEC:
+1       No augment produced!
+        Source: It 's a linguist .
+        Target: She is a linguist .
+        Aligned: {It 's=>She is} a linguist .
+2       Source: She 's an linguist .
+        Target: She 's a linguist .
+        Aligned: She 's {an=>a} linguist .
+        Augmented Swapped: They 're an linguist .
+        Augmented Target: They 're a linguist .
+3       Source: When Gregor Samsa waked one morning from troubled dreams , he finds himself transformed right there in his bed into some sore of monstrous insect .
+        Target: When Gregor Samsa woke one morning from troubled dreams , he found himself transformed right there in his bed into some sort of monstrous insect .
+        Aligned: When Gregor Samsa {waked=>woke} one morning from troubled dreams , he {finds=>found} himself transformed right there in his bed into some {sore=>sort} of monstrous insect .
+        Augmented Swapped: When Gregor Samsa waked one morning from troubled dreams , they found themself transformed right there in their bed into some sore of monstrous insect .
+        Augmented Target: When Gregor Samsa woke one morning from troubled dreams , they found themself transformed right there in their bed into some sort of monstrous insect .
+4       No augment produced!
+        Source: The clock striking as she stepped out into the street .
+        Target: The clock was striking as she stepped out into the street .
+        Aligned: The clock {=>was} striking as she stepped out into the street .
+5       No augment produced!
+        Source: The universe ( which others call the Library ) is composed of indefinitely , perhaps infinite number of hexagonal galleries .
+        Target: The universe ( which others call the Library ) is composed of an indefinite , perhaps infinite number of hexagonal galleries .
+        Aligned: The universe ( which others call the Library ) is composed of {indefinitely=>an indefinite} , perhaps infinite number of hexagonal galleries .
+```
 
 ## Citation
 
