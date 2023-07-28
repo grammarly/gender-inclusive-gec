@@ -1,0 +1,5 @@
+cython==0.29.36
+spacy==2.3.7
+pyinflect
+nltk
+difflib
